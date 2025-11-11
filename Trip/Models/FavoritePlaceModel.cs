@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Trip.Models
+{
+    public class FavoritePlaceModel
+    {
+        public string PlaceName { get; set; }
+        public string NickName { get; set; }
+        public string Category {  get; set; }
+        public bool IsFavorite { get; set; }
+    }
+}

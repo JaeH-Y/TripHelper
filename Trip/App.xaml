@@ -1,0 +1,26 @@
+﻿<Application x:Class="Trip.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Trip"
+             xmlns:vm="clr-namespace:Trip.ViewModels"
+             xmlns:views="clr-namespace:Trip.Views"
+             >
+    <!--StartupUri="Views/MainWindow.xaml"-->
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type vm:NewPlanViewModel}">
+            <views:NewPlanView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AccommodationViewModel}">
+            <views:AccommodationView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LikePlaceViewModel}">
+            <views:LikePlaceView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PlanCabinetViewModel}">
+            <views:PlanCabinetView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingViewModel}">
+            <views:SettingView/>
+        </DataTemplate>
+    </Application.Resources>
+</Application>

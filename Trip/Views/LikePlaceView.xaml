@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="Trip.Views.LikePlaceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Trip.Views"
+             mc:Ignorable="d" 
+             Width="934" Height="450" Background="White">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/MainStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid Visibility="{Binding EmptyFavoriteVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Grid.RowSpan="3">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.7">
+                        <GradientStop Color="Transparent" Offset="0.0"/>
+                        <GradientStop Color="SkyBlue" Offset="0.8"/>
+                        <GradientStop Color="SteelBlue" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="즐겨찾기 한 장소가 없어요! ㅠㅠ" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 10"/>
+                <TextBlock Text="여행 일정을 계획하며 즐겨찾기를 등록해봐요!!" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 10"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Style="{StaticResource FavoriteButtonStyle}" Width="130" Height="35" Margin="10 0"
+                        Command="{Binding CallNewPlanViewModelCommand}">
+                    <TextBlock Text="일정 계획하기"  Style="{StaticResource LargeCenterTextStyle}"/>
+                </Button>
+                <Button Style="{StaticResource FavoriteButtonStyle}" Width="130" Height="35" Margin="10 0"
+                        Command="{Binding AddFavoriteCommand}">
+                    <TextBlock Text="직접 추가하기" Style="{StaticResource LargeCenterTextStyle}"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding HasFavoriteVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 20 5 0">
+                    <Button Style="{StaticResource FavoriteButtonStyle}" Command="{Binding AddFavoriteCommand}" IsEnabled="{Binding IsAddAble}"
+                            Margin="10 0" MinWidth="70">
+                    <TextBlock Text="추가하기" Style="{StaticResource NormalCenterTextStyle}" Margin="5"/>
+                    </Button>
+                    <Button Style="{StaticResource FavoriteButtonStyle}" Command="{Binding EditFavoriteCommand}" IsEnabled="{Binding IsEditAble}"
+                            Margin="10 0" MinWidth="70">
+                        <TextBlock Text="{Binding IsEditText}" Style="{StaticResource NormalCenterTextStyle}" Margin="5"/>
+                    </Button>
+            </StackPanel>
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding FavoritePlaces}"
+                          Padding="30 10">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource FavoriteItemBorderStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Margin="0 0 1 0" BorderThickness="0" Width="20" Height="25" Padding="0 0 0 5" Cursor="Hand" Background="Transparent" Command="{Binding FavoriteChangeCommand}" Visibility="{Binding IsEditModeVisibility}">
+                                    <TextBlock Text="{Binding FavoriteText}" FontSize="18" FontWeight="Medium" VerticalAlignment="Center" Foreground="Red"/>
+                                </Button>
+                                <TextBlock Text="{Binding FavoriteText}" Width="20" FontSize="18" FontWeight="Medium" VerticalAlignment="Center" Foreground="Red" Padding="0 0 0 5" Margin="1 0 0 0 " Visibility="{Binding IsNotEditModeVisibility}"/>
+                                <TextBlock Text="여행지 이름" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" Margin="5 0"/>
+                                <TextBox Text="{Binding NickName}" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" Margin="5 0" Width="120" IsEnabled="{Binding IsEditMode}"/>
+                                <TextBlock Text="주소" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" Margin="5 0"/>
+                                <TextBox Text="{Binding PlaceName}" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" Margin="5 0" Width="200" IsEnabled="{Binding IsEditMode}"/>
+                                <TextBlock Text="분류" FontSize="12" FontWeight="Medium" VerticalAlignment="Center" Margin="10 0"/>
+                                <ComboBox ItemsSource="{Binding CategoryComboList}" SelectedValue="{Binding Category}" DisplayMemberPath="Key" SelectedValuePath="Value" IsEnabled="{Binding IsEditMode}"
+                                          FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="120" Margin="0 10"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,39 @@
+﻿<Window x:Class="Trip.Views.ServerLoadingView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Trip.Views"
+        mc:Ignorable="d"
+        Title="TripHelper" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        >
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/MainStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid Background="AntiqueWhite">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding ServerStatusT}" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Text="{Binding ConnectT}" Style="{StaticResource HeaderTextStyle}" Margin="0 10 0 0"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel VerticalAlignment="Center">
+                <Button Command="{Binding ConnectCommand}" Visibility="{Binding IsConnected}"
+                        Style="{StaticResource MainBoardBtnStyle}" Width="100" Height="30">
+                    <TextBlock Text="접속하기" Style="{StaticResource LargeTextStyle}"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
