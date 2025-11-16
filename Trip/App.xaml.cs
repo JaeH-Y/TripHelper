@@ -9,6 +9,13 @@ using Trip.ViewModels;
 using Trip.Views;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Net.Http;
+using System.IO;
+using Trip.Models;
+using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using Trip.Interfaces;
+using Trip.Config;
 
 namespace Trip
 {
@@ -22,9 +29,19 @@ namespace Trip
         {
             base.OnStartup(e);
 
+            // Config JSON
+            string folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config");
+            if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+            string filePath = Path.Combine(folderPath, "Config.json");
+
+            var configlList = GetSettingJSON(filePath);
+            var config = configlList.First();
+
+            // DI Container
             var services = new ServiceCollection();
 
-            ConfigureServices(services);
+            ConfigureServices(services, config, filePath);
 
             ServiceProvider = services.BuildServiceProvider();
 
@@ -35,14 +52,20 @@ namespace Trip
                 mainWindow.Show();
             }*/
 
+
+            // View Loading
             var serverWindow = ServiceProvider.GetRequiredService<ServerLoadingView>();
             if(serverWindow != null)
             {
                 serverWindow.Show();
             }
         }
-        private void ConfigureServices(IServiceCollection services)
+        private void ConfigureServices(IServiceCollection services, ConfigJSONModel config, string filepath)
         {
+
+            // Config
+            services.AddSingleton<IAppConfig>(sp => new AppConfig(config,filepath));
+
             // ViewModels
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<NewPlanViewModel>();
@@ -79,6 +102,8 @@ namespace Trip
                 var key = "AIzaSyDpqNM6pN5Nq67EIZGl9QfjhF6RCBfSA0Y";
                 return new GoogleAPIService(key, http);
             });
+
+            // 주소 여기서 등록해주는거 없애
             services.AddSingleton<IServerLoadingService>(sp =>
             {
                 var http = new HttpClient();
@@ -89,6 +114,91 @@ namespace Trip
             // Views
             services.AddSingleton<MainWindow>();
             services.AddSingleton<ServerLoadingView>();
+        }
+
+        private List<ConfigJSONModel> GetSettingJSON(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                SetDefualtSettingJSON(filePath);
+            }
+
+            var json = ReadConfigJSON(filePath);
+
+            if(json == null)
+            {
+                Console.WriteLine("ReadJSONError");
+
+                // 한번 더 저장(방어)
+                json = new List<ConfigJSONModel>
+                {
+                    new ConfigJSONModel
+                    {
+                        Mode = 1,
+                        LocalUrl = "127.0.0.1:7174",
+                        HttpUrl = string.Empty,
+                        IsTimeRequest = 0,
+                    }
+                };
+                SaveConfigJSON(filePath, json);
+            }
+            
+            return json;
+
+        }
+
+        private void SetDefualtSettingJSON(string filePath)
+        {
+            try
+            {
+                // 새 리스트 생성
+                List<ConfigJSONModel> list = new List<ConfigJSONModel>();
+                // 기본값 부여
+
+                var defualt = new ConfigJSONModel
+                {
+                    Mode = 1,
+                    LocalUrl = "127.0.0.1:7174",
+                    HttpUrl = string.Empty,
+                    IsTimeRequest = 0,
+                };
+
+                list.Add(defualt);
+
+                // 저장
+                SaveConfigJSON(filePath, list);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        private void SaveConfigJSON(string filePath, List<ConfigJSONModel> list)
+        {
+            try
+            {
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                var newJson = JsonSerializer.Serialize(list, options);
+                File.WriteAllText(filePath, newJson);
+
+                Console.WriteLine("Config JSON 저장 성공");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private List<ConfigJSONModel> ReadConfigJSON(string filePath)
+        {
+            try
+            {
+                var json = JsonSerializer.Deserialize<List<ConfigJSONModel>>(File.ReadAllText(filePath));
+
+                return json;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 

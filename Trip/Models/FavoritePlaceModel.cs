@@ -8,9 +8,9 @@ namespace Trip.Models
 {
     public class FavoritePlaceModel
     {
-        public string PlaceName { get; set; }
-        public string NickName { get; set; }
-        public string Category {  get; set; }
+        public string PlaceName { get; set; } = string.Empty;
+        public string NickName { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
         public bool IsFavorite { get; set; }
     }
 }
