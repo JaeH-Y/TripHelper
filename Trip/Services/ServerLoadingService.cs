@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Trip.Interfaces;
 using Trip.Interfaces.Services;
 
 namespace Trip.Services
@@ -34,7 +35,8 @@ namespace Trip.Services
             }
             catch (Exception ex)
             {
-                return status = "기타오류...";
+                Console.WriteLine(ex.ToString());
+                return status = $"기타오류...\n {ex}";
             }
 
         }

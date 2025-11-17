@@ -66,6 +66,13 @@ namespace Trip
             // Config
             services.AddSingleton<IAppConfig>(sp => new AppConfig(config,filepath));
 
+            Console.WriteLine(config.LocalUrl);
+            // HttpClient 관리
+            services.AddSingleton(new HttpClient()
+            {
+                BaseAddress = new Uri(config.LocalUrl)
+            });
+
             // ViewModels
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<NewPlanViewModel>();
@@ -104,12 +111,7 @@ namespace Trip
             });
 
             // 주소 여기서 등록해주는거 없애
-            services.AddSingleton<IServerLoadingService>(sp =>
-            {
-                var http = new HttpClient();
-                http.BaseAddress = new Uri("https://localhost:7174");
-                return new ServerLoadingService(http);
-            });
+            services.AddSingleton<IServerLoadingService>(sp => sp.GetRequiredService<ServerLoadingService>());
 
             // Views
             services.AddSingleton<MainWindow>();
@@ -135,7 +137,7 @@ namespace Trip
                     new ConfigJSONModel
                     {
                         Mode = 1,
-                        LocalUrl = "127.0.0.1:7174",
+                        LocalUrl = "https://localhost:7174/",
                         HttpUrl = string.Empty,
                         IsTimeRequest = 0,
                     }
@@ -158,7 +160,7 @@ namespace Trip
                 var defualt = new ConfigJSONModel
                 {
                     Mode = 1,
-                    LocalUrl = "127.0.0.1:7174",
+                    LocalUrl = "https://localhost:7174/",
                     HttpUrl = string.Empty,
                     IsTimeRequest = 0,
                 };
