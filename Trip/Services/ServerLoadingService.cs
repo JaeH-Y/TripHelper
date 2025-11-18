@@ -31,7 +31,7 @@ namespace Trip.Services
             }
             catch (HttpRequestException ex)
             {
-                return status = "연결 실패!!\n" + ex.ToString();
+                return status = "연결 지연중..\n"/* + ex.ToString()*/;
             }
             catch (Exception ex)
             {
