@@ -11,6 +11,9 @@
     <Compile Update="Views\LikePlaceView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\LogInView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\NewPlanView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

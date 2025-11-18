@@ -1,0 +1,43 @@
+﻿<Window x:Class="Trip.Views.LogInView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Trip.Views"
+        mc:Ignorable="d"
+        Title="SignIn" Height="400" Width="350" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/MainStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid Background="AntiqueWhite">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+            <StackPanel Margin="0 20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Margin="0 10">
+                    <TextBlock Text="ID" Style="{StaticResource LargeTextStyle}" FontSize="20" Width="60"/>
+                    <TextBox Style="{StaticResource NormalTextBoxStyle}" FontSize="20" Width="200" Margin="5 0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 10">
+                    <TextBlock Text="PW" Style="{StaticResource LargeTextStyle}" FontSize="20" Width="60"/>
+                    <TextBox Style="{StaticResource NormalTextBoxStyle}" FontSize="20" Width="200" Margin="5 0"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="0 20" VerticalAlignment="Center">
+                <Button Style="{StaticResource MainBoardBtnStyle}" Height="40" Width="150" Margin="0 5">
+                    <TextBlock Text="로그인" Style="{StaticResource LargeCenterTextStyle}" FontSize="20"/>
+                </Button>
+                <Button Style="{StaticResource MainBoardBtnStyle}" Height="40" Width="150" Margin="0 5">
+                    <TextBlock Text="ID/PW 찾기" Style="{StaticResource LargeCenterTextStyle}" FontSize="20"/>
+                </Button>
+        </StackPanel>
+        
+    </Grid>
+</Window>
