@@ -22,5 +22,8 @@
         <DataTemplate DataType="{x:Type vm:SettingViewModel}">
             <views:SettingView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LogInViewModel}">
+            <views:LogInView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>
