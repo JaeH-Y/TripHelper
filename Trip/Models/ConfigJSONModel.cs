@@ -11,7 +11,7 @@ namespace Trip.Models
         // Mode 0 = Debug, 1 = Release
         public int Mode { get; set; } = 0;
 
-        public string LocalUrl { get; set; } = "127.0.0.1";
+        public string LocalUrl { get; set; } = string.Empty;
         public string HttpUrl { get; set; } = string.Empty;
 
         // IsTimeRequest 0 = NoRequest, 1 = LoopRequest

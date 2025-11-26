@@ -23,18 +23,22 @@
             <StackPanel Margin="0 20" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Margin="0 10">
                     <TextBlock Text="ID" Style="{StaticResource LargeTextStyle}" FontSize="20" Width="60"/>
-                    <TextBox Style="{StaticResource NormalTextBoxStyle}" FontSize="20" Width="200" Margin="5 0"/>
+                    <TextBox Style="{StaticResource NormalTextBoxStyle}" FontSize="20" Width="200" Margin="5 0"
+                             Text="{Binding IDText}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 10">
                     <TextBlock Text="PW" Style="{StaticResource LargeTextStyle}" FontSize="20" Width="60"/>
-                    <TextBox Style="{StaticResource NormalTextBoxStyle}" FontSize="20" Width="200" Margin="5 0"/>
+                    <TextBox Style="{StaticResource NormalTextBoxStyle}" FontSize="20" Width="200" Margin="5 0"
+                             Text="{Binding PWText}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="1" Margin="0 20" VerticalAlignment="Center">
-                <Button Style="{StaticResource MainBoardBtnStyle}" Height="40" Width="150" Margin="0 5">
+                <Button Style="{StaticResource MainBoardBtnStyle}" Height="40" Width="150" Margin="0 5"
+                        Command="{Binding LogInCommand}">
                     <TextBlock Text="로그인" Style="{StaticResource LargeCenterTextStyle}" FontSize="20"/>
                 </Button>
-                <Button Style="{StaticResource MainBoardBtnStyle}" Height="40" Width="150" Margin="0 5">
+                <Button Style="{StaticResource MainBoardBtnStyle}" Height="40" Width="150" Margin="0 5"
+                        Command="{Binding FindAccountCommand}">
                     <TextBlock Text="ID/PW 찾기" Style="{StaticResource LargeCenterTextStyle}" FontSize="20"/>
                 </Button>
         </StackPanel>
